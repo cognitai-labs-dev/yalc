@@ -1,3 +1,3 @@
 # LLM client library
 
-TODO
+A python wrapper for LLM calls.
