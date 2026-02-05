@@ -5,13 +5,13 @@ help: # Show help for each of the Makefile recipes
 TA ?= -v tests/
 
 ruff-lint: # Run ruff linter
-	uv run ruff check --fix src/
+	uv run ruff check --fix yalc/
 
 ruff-format: # Run ruff formatter
-	uv run ruff format src/
+	uv run ruff format yalc/
 
 mypy: # Run mypy type checker
-	uv run mypy src/
+	uv run mypy yalc/
 
 lint: # Run pre-commit
 	pre-commit run --all-files

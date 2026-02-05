@@ -1,8 +1,8 @@
-from src.clients.client import Client
-from src.clients.client_factory import create_client
-from src.clients.schemas import ClientCall, ClientMessage
-from src.clients.strategy import ClientLogStrategy
-from src.common.schemas import (
+from yalc.clients.client import Client
+from yalc.clients.client_factory import create_client
+from yalc.clients.schemas import ClientCall, ClientMessage
+from yalc.clients.strategy import ClientLogStrategy
+from yalc.common.schemas import (
     ContextMessage,
     LLMModel,
     LLMProvider,

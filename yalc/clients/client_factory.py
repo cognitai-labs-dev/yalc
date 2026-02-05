@@ -1,8 +1,8 @@
-from src.clients.client import Client
-from src.clients.provider_clients.anthropic import AnthropicClient
-from src.clients.provider_clients.openai import OpenAIClient
-from src.clients.strategy import ClientLogStrategy
-from src.common.schemas import LLMModel, LLMProvider
+from yalc.clients.client import Client
+from yalc.clients.provider_clients.anthropic import AnthropicClient
+from yalc.clients.provider_clients.openai import OpenAIClient
+from yalc.clients.strategy import ClientLogStrategy
+from yalc.common.schemas import LLMModel, LLMProvider
 
 provider_to_client_map: dict[LLMProvider, type[Client]] = {
     LLMProvider.OPENAI: OpenAIClient,

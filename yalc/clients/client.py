@@ -4,11 +4,11 @@ from typing import Any, overload
 import instructor
 from pydantic import BaseModel
 
-from src.clients.schemas import ClientCall, ClientMessage
-from src.clients.strategy import ClientLogStrategy
-from src.common.pricing import PricingService
-from src.common.schemas import LLMModel, LLMRole, ResponseStats
-from src.common.utils import to_context_messages
+from yalc.clients.schemas import ClientCall, ClientMessage
+from yalc.clients.strategy import ClientLogStrategy
+from yalc.common.pricing import PricingService
+from yalc.common.schemas import LLMModel, LLMRole, ResponseStats
+from yalc.common.utils import to_context_messages
 
 
 class Client(ABC):

@@ -1,8 +1,8 @@
 from openai.types.responses import Response
 from pydantic import BaseModel
 
-from src.clients.client import Client
-from src.common.schemas import ResponseStats
+from yalc.clients.client import Client
+from yalc.common.schemas import ResponseStats
 
 
 class OpenAIClient(Client):

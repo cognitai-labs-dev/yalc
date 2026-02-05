@@ -1,4 +1,4 @@
-from src.common.schemas import ContextMessage, LLMRole
+from yalc.common.schemas import ContextMessage, LLMRole
 
 
 def to_context_messages(messages: list[dict]) -> list[ContextMessage]:

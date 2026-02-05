@@ -4,7 +4,7 @@ from litellm.litellm_core_utils.get_model_cost_map import (
     get_model_cost_map,
 )
 
-from src.common.schemas import LLMModel, ResponseStats, TokensPricing
+from yalc.common.schemas import LLMModel, ResponseStats, TokensPricing
 
 
 class PricingService:

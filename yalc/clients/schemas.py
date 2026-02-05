@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.common.schemas import ContextMessage, LLMRole, ResponseStats
+from yalc.common.schemas import ContextMessage, LLMRole, ResponseStats
 
 
 class ClientMessage(BaseModel):

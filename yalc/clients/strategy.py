@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from pydantic import BaseModel
 
-from src.clients.schemas import ClientCall
+from yalc.clients.schemas import ClientCall
 
 
 class ClientLogStrategy[T: BaseModel](ABC):
