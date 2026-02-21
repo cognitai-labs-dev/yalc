@@ -1,6 +1,6 @@
 [project]
 name = "yalc"
-version = "0.2.0"
+version = "0.2.1"
 description = "Yet Another LLM Client"
 readme = "README.md"
 requires-python = ">=3.13"
