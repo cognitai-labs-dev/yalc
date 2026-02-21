@@ -40,14 +40,14 @@ class Client(ABC):
         self,
         response_type: type[T],
         messages: list[dict[str, str]],
-    ) -> tuple[T, BaseModel]: ...
+    ) -> tuple[T, ClientCall]: ...
 
     async def structured_response[T: BaseModel](
         self,
         response_type: type[T],
         messages: list[dict[str, str]],
         context: BaseModel | None = None,
-    ) -> T | tuple[T, BaseModel]:
+    ) -> T | tuple[T, ClientCall]:
         """
         Provides a structured response via an LLM call
 
