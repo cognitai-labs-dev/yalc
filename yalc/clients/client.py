@@ -7,7 +7,12 @@ from pydantic import BaseModel
 from yalc.clients.schemas import ClientCall, ClientMessage
 from yalc.clients.strategy import ClientMetadataStrategy
 from yalc.common.pricing import PricingService
-from yalc.common.schemas import LLMModel, LLMRole, ResponseStats
+from yalc.common.schemas import (
+    LLMModel,
+    LLMProvider,
+    LLMRole,
+    ResponseStats,
+)
 from yalc.common.utils import to_context_messages
 
 
@@ -15,7 +20,20 @@ class Client(ABC):
     """Abstract base class for provider-specific LLM clients.
 
     Use :func:`~yalc.clients.client_factory.create_client` to obtain a concrete instance.
+    Subclasses register themselves via the ``@Client.provider(LLMProvider.X)`` decorator.
     """
+
+    _registry: dict[LLMProvider, type["Client"]] = {}
+
+    @classmethod
+    def provider(cls, llm_provider: LLMProvider):
+        """Class decorator that registers a Client subclass for a given provider."""
+
+        def decorator(subclass: type["Client"]) -> type["Client"]:
+            cls._registry[llm_provider] = subclass
+            return subclass
+
+        return decorator
 
     def __init__(
         self,

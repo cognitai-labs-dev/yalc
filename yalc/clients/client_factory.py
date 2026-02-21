@@ -1,15 +1,14 @@
 import instructor
 
 from yalc.clients.client import Client
-from yalc.clients.provider_clients.anthropic import AnthropicClient
-from yalc.clients.provider_clients.openai import OpenAIClient
+from yalc.clients.provider_clients.anthropic import (
+    AnthropicClient,  # noqa: F401
+)
+from yalc.clients.provider_clients.openai import (
+    OpenAIClient,  # noqa: F401
+)
 from yalc.clients.strategy import ClientMetadataStrategy
-from yalc.common.schemas import LLMModel, LLMProvider
-
-provider_to_client_map: dict[LLMProvider, type[Client]] = {
-    LLMProvider.OPENAI: OpenAIClient,
-    LLMProvider.ANTHROPIC: AnthropicClient,
-}
+from yalc.common.schemas import LLMModel
 
 
 def create_client(
@@ -29,7 +28,7 @@ def create_client(
     Raises:
         ValueError: If the model's provider is not supported.
     """
-    client_class = provider_to_client_map.get(model.provider)
+    client_class = Client._registry.get(model.provider)
     if client_class is None:
         raise ValueError(f"Unsupported provider: {model.provider}")
 

@@ -2,9 +2,10 @@ from anthropic.types import Message
 from pydantic import BaseModel
 
 from yalc.clients.client import Client
-from yalc.common.schemas import ResponseStats
+from yalc.common.schemas import LLMProvider, ResponseStats
 
 
+@Client.provider(LLMProvider.ANTHROPIC)
 class AnthropicClient(Client):
     async def _response[T: BaseModel](
         self,
