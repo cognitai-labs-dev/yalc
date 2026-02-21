@@ -1,20 +1,21 @@
+from dataclasses import dataclass
+from unittest.mock import MagicMock
+
 from pydantic import BaseModel
 
 from yalc.clients.client import Client
-from yalc.common.pricing import PricingService
 from yalc.common.schemas import LLMModel, ResponseStats
 
 
-class FakeRawResponse(BaseModel):
+@dataclass
+class FakeRawResponse:
     input_tokens: int
     output_tokens: int
 
 
 class FakeClient(Client):
     def __init__(self):
-        self.metadata_strategies = []
-        self.pricing_service = PricingService()
-        self.model = LLMModel.gpt_4o_mini
+        super().__init__(LLMModel.gpt_4o_mini, MagicMock())
 
     async def _response[T: BaseModel](
         self,

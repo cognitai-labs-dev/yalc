@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, overload
 
-import instructor
+from instructor import AsyncInstructor
 from pydantic import BaseModel
 
 from yalc.clients.schemas import ClientCall, ClientMessage
@@ -15,16 +15,12 @@ class Client(ABC):
     def __init__(
         self,
         model: LLMModel,
+        instructor_client: AsyncInstructor,
         metadata_strategies: list[ClientMetadataStrategy] = [],
     ):
         self.metadata_strategies = metadata_strategies
         self.pricing_service = PricingService()
-
-        self.instructor_client = instructor.from_provider(
-            model.provider_string,
-            async_client=True,
-            mode=model.mode,
-        )
+        self.instructor_client = instructor_client
         self.model = model
 
     @overload

@@ -1,3 +1,5 @@
+import instructor
+
 from yalc.clients.client import Client
 from yalc.clients.provider_clients.anthropic import AnthropicClient
 from yalc.clients.provider_clients.openai import OpenAIClient
@@ -17,4 +19,10 @@ def create_client(
     client_class = provider_to_client_map.get(model.provider)
     if client_class is None:
         raise ValueError(f"Unsupported provider: {model.provider}")
-    return client_class(model, metadata_strategies)
+
+    instructor_client = instructor.from_provider(
+        model.provider_string,
+        async_client=True,
+        mode=model.mode,
+    )
+    return client_class(model, instructor_client, metadata_strategies)
