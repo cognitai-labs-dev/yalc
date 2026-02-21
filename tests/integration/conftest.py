@@ -1,6 +1,7 @@
+from unittest.mock import MagicMock
+
 import pytest
 from pytest_mock import MockerFixture
-from unittest.mock import MagicMock
 
 from yalc.clients.provider_clients.anthropic import AnthropicClient
 from yalc.clients.provider_clients.openai import OpenAIClient
@@ -35,3 +36,11 @@ def openai_client() -> OpenAIClient:
 def anthropic_client() -> AnthropicClient:
     """AnthropicClient with a fake instructor client injected."""
     return AnthropicClient(LLMModel.claude_sonnet_4_5, MagicMock())
+
+
+@pytest.fixture
+def mock_instructor(mocker: MockerFixture) -> None:
+    """Patches the instructor client so no API keys are needed."""
+    mocker.patch(
+        "yalc.clients.client_factory.instructor.from_provider"
+    )

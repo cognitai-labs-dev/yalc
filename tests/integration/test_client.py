@@ -42,18 +42,30 @@ async def test_client_with_returned_client_call(mock_pricing):
 
 
 @pytest.mark.anyio
-async def test_client_calls_strategy_and_returns_parsed_response(
+async def test_client_calls_all_strategies_and_returns_parsed_response(
     mock_pricing,
 ):
     # Arrange
-    recorded: list[tuple[ClientCall, SimpleContext]] = []
+    recorded: list[tuple[str, ClientCall, SimpleContext]] = []
 
-    class RecordingStrategy(ClientMetadataStrategy):
-        def handle(self, call: ClientCall, context: SimpleContext):
-            recorded.append((call, context))
+    class StrategyA(ClientMetadataStrategy[SimpleContext]):
+        def handle(
+            self, call: ClientCall, context: SimpleContext | None
+        ):
+            if context is None:
+                return
+            recorded.append(("a", call, context))
+
+    class StrategyB(ClientMetadataStrategy[SimpleContext]):
+        def handle(
+            self, call: ClientCall, context: SimpleContext | None
+        ):
+            if context is None:
+                return
+            recorded.append(("b", call, context))
 
     client = FakeClient()
-    client.metadata_strategies = [RecordingStrategy()]
+    client.metadata_strategies = [StrategyA(), StrategyB()]
     context = SimpleContext(user_id=42)
     messages = [{"role": "user", "content": "Say hello"}]
 
@@ -66,18 +78,27 @@ async def test_client_calls_strategy_and_returns_parsed_response(
     assert isinstance(result, SimpleResponse)
     assert result.text == "hello"
 
-    # Assert — strategy was called with the ClientCall and context
-    assert len(recorded) == 1
-    call, received_context = recorded[0]
-    assert isinstance(call, ClientCall)
-    assert call.model_name == LLMModel.gpt_4o_mini
-    assert call.input_tokens == 10
-    assert call.output_tokens == 5
-    assert call.input_tokens_cost == 10 * 0.0001
-    assert call.output_tokens_cost == 5 * 0.0002
-    assert len(call.context_messages) == 1
-    assert call.context_messages[0].message == "Say hello"
-    assert call.context_messages[0].role == LLMRole.USER
-    assert call.client_message.role == LLMRole.ASSISTANT
-    assert call.client_message.response == result
-    assert received_context == context
+    # Assert — both strategies were called in order with the ClientCall and context
+    assert len(recorded) == 2
+
+    strategy_a, call_a, context_a = recorded[0]
+    strategy_b, call_b, context_b = recorded[1]
+
+    assert strategy_a == "a"
+    assert strategy_b == "b"
+
+    assert isinstance(call_a, ClientCall)
+    assert call_a.model_name == LLMModel.gpt_4o_mini
+    assert call_a.input_tokens == 10
+    assert call_a.output_tokens == 5
+    assert call_a.input_tokens_cost == 10 * 0.0001
+    assert call_a.output_tokens_cost == 5 * 0.0002
+    assert len(call_a.context_messages) == 1
+    assert call_a.context_messages[0].message == "Say hello"
+    assert call_a.context_messages[0].role == LLMRole.USER
+    assert call_a.client_message.role == LLMRole.ASSISTANT
+    assert call_a.client_message.response == result
+    assert context_a == context
+
+    assert call_b == call_a
+    assert context_b == context
