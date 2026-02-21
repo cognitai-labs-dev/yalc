@@ -12,6 +12,11 @@ from yalc.common.utils import to_context_messages
 
 
 class Client(ABC):
+    """Abstract base class for provider-specific LLM clients.
+
+    Use :func:`~yalc.clients.client_factory.create_client` to obtain a concrete instance.
+    """
+
     def __init__(
         self,
         model: LLMModel,
@@ -45,9 +50,11 @@ class Client(ABC):
         context: BaseModel | None = None,
     ) -> T | tuple[T, ClientCall]:
         """
-        Provides a structured response via an LLM call
+        Sends messages to the LLM and returns a parsed Pydantic response.
 
-        Uses provided metadat strategies to handle all the LLM messages
+        If ``context`` is provided, all registered metadata strategies are invoked and only
+        the parsed response is returned. Otherwise, a ``(parsed, ClientCall)`` tuple is returned
+        so the caller can inspect token usage and costs.
         """
         response, llm_call = await self._structured_response(
             response_type, messages

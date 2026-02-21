@@ -42,14 +42,14 @@ A metadata handler strategy is provided during client creation. The strategy is 
 
 ```python
 # 1. Define your strategy
-class LogStrategy:
+class LogStrategy(ClientMetadataStrategy[LLMLogContext]):
     def handle(self, call: ClientCall, context: LLMLogContext):
         print(f"Tokens: {call.input_tokens + call.output_tokens}")
         print(f"Cost: {call.input_tokens_cost + call.output_tokens_cost}")
         db.save(call.model_dump(), context.request_id)
 
 # 2. Create client with the strategy
-client = create_client(LLMModel.gpt_4o_mini, log_strategies=[LogStrategy()])
+client = create_client(LLMModel.gpt_4o_mini, metadata_strategies=[LogStrategy()])
 
 # 3. Pass context to trigger the strategy
 result = await client.structured_response(

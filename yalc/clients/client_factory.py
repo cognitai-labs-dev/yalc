@@ -16,6 +16,19 @@ def create_client(
     model: LLMModel,
     metadata_strategies: list[ClientMetadataStrategy] = [],
 ) -> Client:
+    """Create and return a provider-specific :class:`~yalc.clients.client.Client` for the given model.
+
+    Args:
+        model: The LLM model to use. Determines which provider client is instantiated.
+        metadata_strategies: Optional list of strategies invoked after each call when a
+            context object is supplied to ``structured_response``.
+
+    Returns:
+        A ready-to-use async ``Client`` instance configured for the specified model.
+
+    Raises:
+        ValueError: If the model's provider is not supported.
+    """
     client_class = provider_to_client_map.get(model.provider)
     if client_class is None:
         raise ValueError(f"Unsupported provider: {model.provider}")

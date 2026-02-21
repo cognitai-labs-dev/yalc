@@ -6,6 +6,8 @@ from pydantic import BaseModel
 
 
 class LLMRole(StrEnum):
+    """Role of a participant in an LLM conversation."""
+
     ASSISTANT = "assistant"
     USER = "user"
     SYSTEM = "system"
@@ -13,6 +15,8 @@ class LLMRole(StrEnum):
 
 
 class ResponseStats(BaseModel):
+    """Token usage and cost statistics for a single LLM call."""
+
     input_tokens: int
     output_tokens: int
     input_tokens_cost: float
@@ -20,6 +24,8 @@ class ResponseStats(BaseModel):
 
 
 class ContextMessage(BaseModel):
+    """A single message in a conversation, with its role and text content."""
+
     message: str
     role: LLMRole
 
@@ -30,11 +36,18 @@ class TokensPricing(NamedTuple):
 
 
 class LLMProvider(StrEnum):
+    """Supported LLM providers."""
+
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
 
 
 class LLMModel(StrEnum):
+    """Supported LLM models.
+
+    Each value is the canonical model ID string used when calling the provider API.
+    """
+
     gpt_4o_mini = "gpt-4o-mini"
     gpt_5_mini = "gpt-5-mini"
     claude_sonnet_4_5 = "claude-sonnet-4-5"
