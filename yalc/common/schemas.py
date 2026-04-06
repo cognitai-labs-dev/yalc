@@ -58,7 +58,10 @@ class LLMModel(StrEnum):
     gpt_5_mini = "gpt-5-mini"
     gpt_5_nano = "gpt-5-nano"
     gpt_5_2 = "gpt-5.2"
-    gpt_5_3_codex = "gpt-5.2-codex"
+    gpt_5_2_codex = "gpt-5.2-codex"
+    gpt_5_4 = "gpt-5.4"
+    gpt_5_4_mini = "gpt-5.4-mini"
+    gpt_5_4_nano = "gpt-5.4-nano"
 
     claude_haiku_4_5 = "claude-haiku-4-5"
     claude_sonnet_4_5 = "claude-sonnet-4-5"
@@ -83,7 +86,10 @@ model_to_provider_map: dict[LLMModel, LLMProvider] = {
     LLMModel.gpt_5_mini: LLMProvider.OPENAI,
     LLMModel.gpt_5_nano: LLMProvider.OPENAI,
     LLMModel.gpt_5_2: LLMProvider.OPENAI,
-    LLMModel.gpt_5_3_codex: LLMProvider.OPENAI,
+    LLMModel.gpt_5_2_codex: LLMProvider.OPENAI,
+    LLMModel.gpt_5_4_mini: LLMProvider.OPENAI,
+    LLMModel.gpt_5_4: LLMProvider.OPENAI,
+    LLMModel.gpt_5_4_nano: LLMProvider.OPENAI,
     LLMModel.claude_haiku_4_5: LLMProvider.ANTHROPIC,
     LLMModel.claude_sonnet_4_5: LLMProvider.ANTHROPIC,
     LLMModel.claude_sonnet_4_6: LLMProvider.ANTHROPIC,
