@@ -1,12 +1,13 @@
 [project]
 name = "yalc"
-version = "0.3.1"
+version = "0.3.2"
 description = "Yet Another LLM Client"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "anthropic>=0.71",
     "cachetools>=6.2.6",
-    "instructor[anthropic]>=1.14.5",
+    "instructor>=1.14.5",
     "litellm>=1.81.6",
 ]
 

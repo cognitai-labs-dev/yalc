@@ -67,6 +67,7 @@ class LLMModel(StrEnum):
     claude_sonnet_4_5 = "claude-sonnet-4-5"
     claude_sonnet_4_6 = "claude-sonnet-4-6"
     claude_opus_4_6 = "claude-opus-4-6"
+    claude_opus_4_7 = "claude-opus-4-7"
 
     @property
     def provider(self) -> LLMProvider:
@@ -94,4 +95,5 @@ model_to_provider_map: dict[LLMModel, LLMProvider] = {
     LLMModel.claude_sonnet_4_5: LLMProvider.ANTHROPIC,
     LLMModel.claude_sonnet_4_6: LLMProvider.ANTHROPIC,
     LLMModel.claude_opus_4_6: LLMProvider.ANTHROPIC,
+    LLMModel.claude_opus_4_7: LLMProvider.ANTHROPIC,
 }
